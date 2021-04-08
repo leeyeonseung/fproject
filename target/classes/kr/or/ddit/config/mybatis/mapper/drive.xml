@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="drive">
+
+<select id="selectfile" resultType="drivevo" parameterType="drivevo">
+select * from DRIVE where FILENO=#{fileno}
+</select>
+
+<select id="selectallfile" resultType="drivevo" parameterType="String">
+select * from DRIVE where PRJCTNO=#{prjctno} and DELETEAT=0 and FLPTH is null
+</select>
+<select id="folderselectallfile" resultType="drivevo" parameterType="drivevo">
+select * from DRIVE where PRJCTNO=#{prjctno} and DELETEAT=0 and FLPTH=#{flpth}
+</select>
+
+<insert id="upfile" parameterType="drivevo">
+INSERT INTO DRIVE (
+		    	FILENO	<!--파일번호 -->
+		    ,	PRJCTNO		<!--프로젝트번호 -->
+		    ,	FILENM	<!--파일명 -->
+		    ,	FLPTH	<!--파일경로 -->
+		    ,	FILETY	<!--파일유형 -->
+		    ,	DELETEAT	<!--삭제여부 -->
+		    ,	UPPERFILENO	<!--상위파일번호 -->
+		    ,	RFILENM	<!--저장되는파일명 -->
+		    ,	FILEUPLOADDE	<!--파일업로드날짜 -->
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + DRIVE_SEQ.NEXTVAL) FILENO
+		    ,#{prjctno}	<!--프로젝트번호 -->
+		    ,#{filenm}	<!--파일명 -->
+		    ,#{flpth}	<!--파일경로 -->
+		    ,#{filety}	<!--파일유형 -->
+		    ,#{deleteat}	<!--삭제여부 -->
+		    ,#{upperfileno}	<!--상위파일번호 -->
+		    ,#{rfilenm}	<!--저장되는파일명 -->
+		    ,SYSDATE
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('FL')
+
+</insert>
+<update id="defile" parameterType="drivevo">
+update DRIVE set DELETEAT=1 where FILENO=#{fileno} and PRJCTNO=#{prjctno}
+</update>
+
+
+</mapper>

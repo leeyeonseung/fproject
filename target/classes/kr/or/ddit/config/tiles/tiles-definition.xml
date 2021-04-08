@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  <definition name="basic.layout" template="/WEB-INF/views/tiles/layout.jsp">
+
+    <put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+    <put-attribute name="left" value="/WEB-INF/views/tiles/left.jsp" />
+    <put-attribute name="right" value="/WEB-INF/views/tiles/right.jsp" />
+    <put-attribute name="css" value="/WEB-INF/views/tiles/css.jsp" />
+    <put-attribute name="script" value="/WEB-INF/views/tiles/script.jsp" />
+  
+  </definition>
+  
+  <!-- 
+  tiles.user.pagingUser 
+  tiles.user.allUser == > allUserBody.jsp
+  tiles.user.regist ==> registBody.jsp
+  
+  -->
+  <definition name="tiles.*.*" extends="basic.layout">
+      <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+  
+  </definition>
+  
+<!--   
+    <definition name="tiles.*.*" extends="basic.layout">
+      <put-attribute name="body" value="/WEB-INF/views/user/pagingUserBody.jsp" />
+  
+  </definition> -->
+  
+</tiles-definitions>

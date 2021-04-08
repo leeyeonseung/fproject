@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="msg">
+	<insert id="msgsend" parameterType="messagevo">
+		INSERT INTO msg(
+		    	mssageno	
+		    ,	usid
+		    ,	mssagesj	
+		    ,	mssagecn	
+		    ,	mssagede	
+		    ,   cnfirmat
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + MG_SEQ.NEXTVAL) mssageno
+		   	,#{usid}
+		    ,#{mssagesj}	
+		    ,#{mssagecn}	
+		    ,SYSDATE
+		    ,0
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('mg')
+	
+	</insert>
+	
+	
+	<insert id="msgsend2" parameterType="messagevo">
+		INSERT INTO MSG_RECEPTION(
+		    	mssageno
+		    	,re_usid
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + MG_SEQ.CURRVAL) mssageno 
+		     ,#{re_usid}
+		    
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('mg')
+	</insert>
+	<select id="count" parameterType="String" resultType="int">
+		SELECT count(cnfirmat)cntcn
+		FROM msg_reception,msg
+		where msg_reception.mssageno = msg.MSSAGENO
+		and cnfirmat = 0
+		and re_usid=#{re_usid}
+	</select>
+	
+	<select id="msgAllList" parameterType="String" resultType="messagevo">
+	SELECT rownum mssageno2
+		  ,msg.mssageno
+	      ,msg_reception.re_usid
+	      ,msg.usid
+	      ,msg.mssagesj
+	      ,msg.mssagecn
+	       ,to_char(msg.mssagede,'YYYY-MM-DD HH24:MI')MSSAGEDE
+	FROM msg_reception,msg
+	where msg_reception.mssageno = msg.MSSAGENO
+	and re_usid=#{re_usid}
+	and cnfirmat = 0  <!-- 0읽지않음 1 읽음  -->
+	order by mssageno2 DESC
+	</select>
+	
+	<select id="msgAllListread" parameterType="pagevo" resultType="messagevo">
+	select * 
+            FROM 
+            (select rownum rn, a.*
+			 from 
+			    (SELECT rownum mssageno2
+		  ,msg.mssageno
+	      ,msg_reception.re_usid
+	      ,msg.usid
+	      ,msg.mssagesj
+	      ,msg.mssagecn
+	      ,to_char(msg.mssagede,'YYYY-MM-DD HH24:MI')MSSAGEDE
+	FROM msg_reception,msg
+	where msg_reception.mssageno = msg.MSSAGENO
+	and re_usid=#{re_usid}
+	and cnfirmat = 1  <!-- 0읽지않음 1 읽음  -->
+	order by mssageno2 DESC) a 
+	 where rownum &lt;= #{page} * #{pageSize} )
+	where rn between (#{page}-1)* #{pageSize} + 1 and #{page} * #{pageSize}
+	</select>
+
+	<select id="msgDetail" resultType="messagevo" parameterType="messagevo">
+		SELECT rownum numberrn
+		      ,msg_reception.re_usid
+		      ,msg.MSSAGENO
+		      ,msg.usid
+		      ,msg.MSSAGESJ
+		      ,msg.MSSAGECN
+		      ,to_char(msg.mssagede,'YYYY-MM-DD HH24:MI')MSSAGEDE
+		FROM msg_reception,msg
+		where msg_reception.mssageno = msg.MSSAGENO
+		and msg_reception.re_usid=#{re_usid}
+		and msg.MSSAGENO=#{mssageno}
+	
+	</select>
+	
+	<update id="DeState" parameterType="String" >
+	UPDATE msg 
+		SET cnfirmat = 1 
+		WHERE mssageno =#{mssageno}
+	</update>
+	
+	<select id="msgSentList" parameterType="pagevo" resultType="messagevo">
+			select * 
+            FROM 
+            (select rownum rn, a.*
+			 from 
+			    (SELECT rownum mssageno2
+					  ,msg.mssageno
+				      ,msg_reception.re_usid
+				      ,msg.mssagesj
+				      ,msg.mssagecn
+			          ,msg.usid
+			          ,to_char(msg.mssagede,'YYYY-MM-DD HH24:MI')MSSAGEDE
+			          
+			FROM msg_reception,msg
+			where msg_reception.mssageno = msg.MSSAGENO
+			and usid=#{usid}
+			order by mssageno2 DESC
+                ) a 
+			 where rownum &lt;= #{page} * #{pageSize} )
+			where rn between (#{page}-1)* #{pageSize} + 1 and #{page} * #{pageSize}
+	</select>
+	
+	<insert id="replysend" parameterType="messagevo">
+		INSERT INTO msg(
+		    	mssageno	
+		    ,	usid
+		    ,	mssagesj	
+		    ,	mssagecn	
+		    ,	mssagede	
+		    ,   cnfirmat
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + MG_SEQ.NEXTVAL) mssageno
+		   	,#{usid}
+		    ,#{mssagesj}	
+		    ,#{mssagecn}	
+		    ,SYSDATE
+		    ,0
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('mg')
+	
+	</insert>
+	
+	
+	<insert id="replysend2" parameterType="messagevo">
+		INSERT INTO MSG_RECEPTION(
+		    	mssageno
+		    	,re_usid
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + MG_SEQ.CURRVAL) mssageno 
+		     ,#{re_usid}
+		    
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('mg')
+		</insert>
+		
+		<select id="selectAllMsgCnt" resultType="int" parameterType="String">
+			select count(*) FROM msg_reception,msg
+			where msg_reception.mssageno = msg.mssageno 
+			and usid=#{usid} 
+		</select>
+	
+		<select id="selectAllMsgCnt2" resultType="int" parameterType="String">
+		 select count(*) FROM msg_reception,msg
+			where msg_reception.mssageno = msg.mssageno
+            and re_usid=#{re_usid}
+            and cnfirmat = 1
+		</select>
+		
+	<select id="msgkeydown" resultType="usersvo" parameterType="String">
+		select usid
+		from users
+		where usid like '%'||#{value}||'%'
+	</select>
+</mapper>

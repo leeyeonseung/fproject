@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="task">
+	<select id="taskAllList" resultType="taskvo" parameterType="pagevo">
+select *
+from
+ (select rownum rn, a.*
+    from 
+(select prjctno
+				, jobno
+				, jobnm
+				, jobcn
+				, jobpriort
+				, jobsttus
+				, prgsdo
+				, to_char(jobrgsde, 'yyyy-MM-dd') jobrgsde
+				, to_char(jobbgnde, 'yyyy-MM-dd') jobbgnde
+				, to_char(jobclosde, 'yyyy-MM-dd') jobclosde
+				, upperjobno
+				, jobwrter
+				, (select count(*)-1 from task_users where jobno =task.jobno) mcount
+				, (select users.usernm from task_users, users where task_users.chargerid = users.usid and jobno = task.jobno and rownum = 1) manager
+		from task
+		where prjctno = #{prjctno})a
+		where rownum &lt;= #{page} * #{pageSize} )
+		where rn between (#{page}-1)* #{pageSize} + 1 and #{page} * #{pageSize}
+	</select>
+	<select id="selectAlltask" resultType="int" parameterType="String">
+	select count(*)
+	from
+	(select prjctno
+				, jobno
+				, jobnm
+				, jobcn
+				, jobpriort
+				, jobsttus
+				, prgsdo
+				, to_char(jobrgsde, 'yyyy-MM-dd') jobrgsde
+				, to_char(jobbgnde, 'yyyy-MM-dd') jobbgnde
+				, to_char(jobclosde, 'yyyy-MM-dd') jobclosde
+				, upperjobno
+				, jobwrter
+				, (select count(*)-1 from task_users where jobno =task.jobno) mcount
+				, (select users.usernm from task_users, users where task_users.chargerid = users.usid and jobno = task.jobno and rownum = 1) manager
+		from task
+		where prjctno = #{prjctno})
+	</select>
+
+<!-- 해당 프로젝트에 대한 업무 개수 -->
+<select id="taskCount" parameterType="String" resultType="int">
+	select count(*) from task where prjctno = #{prjctno}
+</select>
+ 
+  <select id="TaskAllViewAccess" parameterType="map" resultType="taskvo">
+	select task.*
+			, (select count(*)-1 from task_users where jobno =task.jobno) mcount
+			, (select users.usernm from task_users, users where task_users.chargerid = users.usid and jobno =task.jobno and rownum = 1) manager
+	from task
+	<choose>
+	   <when test="workradio != null and workradio.equals('내업무')">
+	      ,(select task.* from TASK_USERS, task where task_users.jobno = task.jobno and chargerid = #{usid})a
+	   </when>
+	<otherwise></otherwise> 
+	</choose>
+	where task.prjctno = #{prjctno}
+	<choose>
+		<when test="workradio != null and workradio.equals('내업무')">
+			and task.jobno = a.jobno
+		</when>
+		<otherwise></otherwise>
+	</choose>
+	and (
+	<!--   task.jobsttus = '요청' 
+	  		or task.jobsttus = '진행' 
+	  		or task.jobsttus = '완료' 
+	  		or task.jobsttus = '보류'-->
+		<foreach collection="sttus1" separator="OR" item="sttu1">
+			task.jobsttus=#{sttu1}
+		</foreach>  
+	)
+	and (
+	<!-- task.jobpriort = '낮음' 
+	or task.jobpriort = '보통' 
+	or task.jobpriort = '긴급' 
+	or task.jobpriort = '높음' -->
+		<foreach collection="workcheck1" separator="OR" item="workcheck">
+			task.jobpriort=#{workcheck}
+		</foreach>  
+	)
+	<!--시작일  -->
+	<choose>
+		<when test="workradio1 != null and workradio1.equals('이번달')">
+			and to_char(task.jobbgnde, 'yyyy-MM') = to_char(sysdate, 'yyyy-MM')
+		</when>
+		<when test="workradio1 != null and workradio1.equals('오늘')">
+			and to_char(task.jobbgnde, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
+		</when>
+		<otherwise></otherwise>
+	</choose>
+	<!--마감일자  -->
+	<choose>
+	<!--keyword 파라미터  -->
+		<when test="workradio2 != null and workradio2.equals('이번달2')">
+		  and to_char(task.jobclosde, 'yyyy-MM') = to_char(sysdate, 'yyyy-MM')
+		</when>
+		<when test="workradio2 != null and workradio2.equals('오늘2')">
+		  and to_char(task.jobclosde, 'yyyy-MM-dd') = to_char(sysdate, 'yyyy-MM-dd')
+		</when>
+		<when test="workradio2 != null and workradio2.equals('날짜미정')">
+		  and jobclosde is null
+		</when>
+		<otherwise></otherwise>
+	</choose>
+	
+  </select>
+
+	
+	
+
+  
+ 
+ </mapper>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="project">
+	<!--프로젝트 select  -->
+	<select id="selectAllpro" resultType="projectvo" parameterType="String">
+		select project.*, (select count(*)from member where prjctno=project.prjctno) membercnt
+		from project, member
+		where project.prjctno = member.prjctno
+		 and member.usid = #{usid}
+		 and prjctsttus='ING'
+		order by bkmkat desc
+	</select>
+	
+	<select id="invitelist2" parameterType="String" resultType="projectvo">
+		select prjctnm,
+		(select count(*)from member where prjctno=project.prjctno)membercnt
+		from project
+		where prjctno=#{prjctno}
+	
+	</select>
+	
+	<!--프로젝트 생성  -->
+	<insert id="registproject" parameterType="projectvo">
+			INSERT INTO project (prjctno, 
+								prjctcreatde, 
+								prjctsttus,
+								prjctnm,
+								prjctcn,
+								prjctty,
+								bkmkat,
+								snwrtatr,
+								filedownatr) 
+								
+			SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + PJ_SEQ.NEXTVAL) prjctno, 
+				 SYSDATE, 
+				 'ING',
+				 #{prjctnm},
+				 #{prjctcn}, 
+				 #{prjctty}, 
+				 #{bkmkat},
+				 #{snwrtatr},
+				 #{filedownatr}
+				 
+			FROM code_group
+			WHERE codetyid = UPPER('pj')
+	</insert>
+	
+	<!-- 프로젝트 생성시 생성자 1명 참여 -->
+	<insert id="insertmember" parameterType="membervo">
+		insert into member (prjctno, usid, usernm, author, aditde, deletede)
+		select codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + PJ_SEQ.CURRVAL) prjctno
+        		, #{usid}
+        		, #{usernm}
+        		, 1
+        		, sysdate
+        		, null
+		from code_group
+		WHERE codetyid = UPPER('pj')
+	</insert>
+	
+	<!-- 완료된 프로젝트 -->
+	<select id ="selectcomplatepro" resultType="projectvo" parameterType="String">
+		select project.*,
+		(select count(*)from member where prjctno=project.prjctno)membercnt
+		from project, member
+		where project.prjctno = member.prjctno
+		  and prjctsttus='COMP'
+		  and member.usid = #{usid}
+		order by bkmkat desc
+	</select>
+	
+	<select id ="recyclebin" resultType="projectvo" parameterType="String">
+		select project.*,
+		(select count(*)from member where prjctno=project.prjctno)membercnt
+		from project, member
+		where project.prjctno = member.prjctno
+		  and prjctsttus='DEL'
+		  and member.usid = #{usid}
+	</select>
+	
+	<!-- 프로젝트 상태 >> 삭제 -->
+	<update id="deleterecycle" parameterType="projectvo">
+		update project set prjctsttus = 'DEL'
+		where prjctno=#{prjctno}
+	</update>
+	<!-- 프로젝트 상태 >> 완료 -->
+	<update id="completepro" parameterType="projectvo">
+		update project set prjctsttus = 'COMP'
+		where prjctno=#{prjctno}
+	</update>
+	<!-- 프로젝트 상태 완료에서 >> 진행  -->
+	<update id="modifybtnpro" parameterType="projectvo">
+		update project set prjctsttus = 'ING'
+		where prjctno=#{prjctno}
+	</update>
+	<!-- 프로젝트 상태 휴지통에서 >> 진행으로 복구  -->
+	<update id="restorepro" parameterType="projectvo">
+		update project set prjctsttus = 'ING'
+		where prjctno=#{prjctno}
+	</update>
+	
+	<!-- 즐겨찾기 추가 -->
+	<update id="favoritepro" parameterType="projectvo">
+		update project set bkmkat = '1'
+		where prjctno=#{prjctno}
+	</update>
+	<!-- 즐겨찾기 해제 -->
+	<update id="favorite" parameterType="projectvo">
+		update project set bkmkat = '0'
+		where prjctno=#{prjctno}
+	</update>
+	
+	<!-- 프로젝트 완전 삭제 -->
+	<delete id="deleteproject" parameterType="String">
+		 delete from project where prjctno = #{prjctno}
+	</delete>
+</mapper>

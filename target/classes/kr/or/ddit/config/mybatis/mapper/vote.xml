@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="vote">
+
+<insert id="voteinsert" parameterType="votevo">
+
+	INSERT INTO vote (
+    voteno,
+    prjctno,
+    votede,
+    voteendde,
+    votethema,
+    clostt
+)
+  SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + VT_SEQ.NEXTVAL) voteno
+		    ,#{prjctno}	
+		    ,SYSDATE
+		    ,#{voteendde}
+		    ,#{votethema}
+		    ,0	
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('vt')
+
+</insert>
+<insert id="voteListinsert" parameterType="votevo">
+	INSERT INTO votecont (
+	    voteno,
+	    votelist,
+	    votelistno,
+	 	novote
+	) 
+	SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + VT_SEQ.CURRVAL) voteno
+			    ,#{votelist}	
+			    ,#{votelistno}
+			    ,0
+			   
+			FROM code_group
+			WHERE codetyid = UPPER('vt')
+			
+</insert>
+<select id="voteview" resultType="votevo">
+	SELECT
+	 	 rownum voteno 
+	 	,voteno as realvoteno
+	    ,votede    
+	    ,to_char(voteendde,'yyyy-mm-dd')voteendde  
+	    ,votethema  
+	    ,clostt 
+	    ,prjctno      
+	FROM vote
+</select>
+
+<select id="votecont" parameterType="String" resultType="votevo">
+	SELECT
+	    voteno,
+	    votelist,
+	    votelistno,
+	    novote
+	FROM
+	    votecont
+	where voteno =#{voteno}
+</select>
+<insert id="votecheck" parameterType="votevo">
+	INSERT INTO vote_users (
+	    voteno,
+	    usid,
+	    voteone,
+	    etcopinion
+	) VALUES (
+	    #{voteno},
+	    #{usid},
+	    #{voteone},
+	    #{etcopinion}
+	)
+</insert>
+<update id="novoteupdate" parameterType="votevo">
+  	
+  	UPDATE votecont 
+    SET novote = novote + 1 
+    WHERE voteno=#{voteno} and votelistno = #{votelistno}
+    
+</update>
+<select id="votecontlist" parameterType="String" resultType="votevo">
+	select novote
+	from votecont
+	where voteno=#{voteno}
+	order by voteno
+</select>
+
+</mapper>

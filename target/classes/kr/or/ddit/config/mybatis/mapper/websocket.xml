@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="websocket">
+
+	<insert id="insertMessage" parameterType="chatvo">
+		insert into chat values (#{prjctno}, #{chttcn}, sysdate, #{usid})
+	</insert>
+	
+	<select id="callUser" resultType="membervo" parameterType="String">
+		select * from member where prjctno = #{prjctno}
+	</select>
+
+</mapper>

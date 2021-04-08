@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="/kr/or/ddit/config/db/dbinfo.properties"/>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+
+	<typeAliases>
+		
+		<typeAlias type="kr.or.ddit.model.AlarmVo" alias="alarmvo"/>
+		<typeAlias type="kr.or.ddit.model.ApprovalVo" alias="approvalvo"/>
+		<typeAlias type="kr.or.ddit.model.CalendarVo" alias="calendarvo"/>
+		<typeAlias type="kr.or.ddit.model.ChatVo" alias="chatvo"/>
+		<typeAlias type="kr.or.ddit.model.CompanyVo" alias="companyvo"/>
+		<typeAlias type="kr.or.ddit.model.DriveVo" alias="drivevo"/>
+		<typeAlias type="kr.or.ddit.model.FaqVo" alias="faqvo"/>
+		<typeAlias type="kr.or.ddit.model.JourvalVo" alias="jourvalvo"/>
+		<typeAlias type="kr.or.ddit.model.MemberVo" alias="membervo"/>
+		<typeAlias type="kr.or.ddit.model.MessageVo" alias="messagevo"/>
+		<typeAlias type="kr.or.ddit.model.NoticeVo" alias="noticevo"/>
+		<typeAlias type="kr.or.ddit.model.ProjectVo" alias="projectvo"/>
+		<typeAlias type="kr.or.ddit.model.RepleVo" alias="replevo"/>
+		<typeAlias type="kr.or.ddit.model.Task_ModifyVO" alias="task_modifyvo"/>
+		<typeAlias type="kr.or.ddit.model.TaskVo" alias="taskvo"/>
+		<typeAlias type="kr.or.ddit.model.TaskVo2" alias="taskvo2"/>
+		<typeAlias type="kr.or.ddit.model.Temporary_fileVo" alias="temporary_filevo"/>
+		<typeAlias type="kr.or.ddit.model.User_bbsVo" alias="user_bbsvo"/>
+		<typeAlias type="kr.or.ddit.model.VoteVo" alias="votevo"/>
+		<typeAlias type="kr.or.ddit.user.model.UsersVo" alias="usersvo"/>
+		<typeAlias type="kr.or.ddit.model.Task_usersVo" alias="task_usersvo"/>
+		<typeAlias type="kr.or.ddit.gantt.model.GanttVo" alias="ganttvo"/>
+		<typeAlias type="kr.or.ddit.model.MessageVo" alias="messagevo"/>
+		<typeAlias type="kr.or.ddit.model.PageVo" alias="pagevo"/>
+	</typeAliases>
+
+  <mappers>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/invite.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/drive.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/users.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/calendar.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/project.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/task.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/gantt.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/message.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/websocket.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/vote.xml"/>
+    <mapper resource="kr/or/ddit/config/mybatis/mapper/notice.xml"/>
+  </mappers>
+</configuration>

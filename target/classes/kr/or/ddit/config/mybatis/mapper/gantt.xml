@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="gantt">
+
+	<select id="callTask" parameterType="String" resultType="ganttvo">
+		select a.prjctno
+			, a.jobno
+			, a.jobnm
+			, a.jobcn
+			, a.jobsttus
+			, a.prgsdo
+			, to_char(a.jobbgnde, 'yyyy-MM-dd') jobbgnde
+			, to_char(a.jobclosde, 'yyyy-MM-dd') jobclosde
+        	, (select b.jobnm from task b where a.upperjobno = b.jobno) upperjobnm
+		from task a, project p
+		where a.prjctno = p.prjctno
+		  and p.prjctno = #{prjctno}
+	</select>
+</mapper>

@@ -1,0 +1,183 @@
+@charset "utf-8";
+
+.usernm_fix{
+	margin-left: 150px;
+	
+}
+
+#pass_changeBtn {
+			margin-left: 18%;
+			margin-top: 3%;
+			width: 26%;
+			
+		}
+	
+		#content_pass {
+			display: none;
+			margin-right: -20px;
+    		padding-right: 20px;
+    		min-height: calc(100vh - 56px);
+    		border-left: 1px solid #dfdfdf;
+    		border-right: 1px solid #dfdfdf;
+    		background-color: #fff;
+    		box-sizing: border-box;
+		}
+		#content_pass h1 {
+			margin-top : 5%;
+			font-size: 1.5em;
+		}
+		
+		.pass_toll {
+			border-style : none;
+			border-bottom: 1px solid #dddee2;
+			margin-left: 10%;
+		}
+		
+		.passcheck_toll{
+			border-style : none;
+			border-bottom: 1px solid #dddee2;
+			margin-left: 5%;
+		}
+	
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 	 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.1);		
+		}
+		.modal-content{
+			text-align: center;
+			background-color: #FE642E;
+			margin: 8% auto; 
+            padding: 20px;
+            border-style: none;
+            width: 20%;  
+            color: white; 
+            font-size: 1.1em;
+		}
+		
+	
+		#content_setting{
+			margin-right: -20px;
+    		padding-right: 20px;
+    		min-height: calc(100vh - 56px);
+    		border-left: 1px solid #dfdfdf;
+    		border-right: 1px solid #dfdfdf;
+    		background-color: #fff;
+    		box-sizing: border-box;
+		}
+		
+		.usernm_save input[type="text"]{
+			border-style : none;
+			border-bottom: 1px solid #dddee2;
+		}
+		
+		.fix_info {
+			margin-top: 20%;
+			margin-left: 15%;
+		}
+		
+		.fix_info li{
+			display: block;
+			min-height: 50px;
+		}
+		.over_edit strong{
+			display: inline-block;
+			min-width: 200px;
+			height: 26px;
+		}
+		
+		.over_edit a{
+			display: inline-block;
+		}
+		
+		.fix_info label{
+			display: inline-block;
+			min-width: 180px;
+			height: 26px;
+			font-weight: 700;
+			
+		}
+		.save_edit input[type="text"]{
+			display:inline-block;
+			width: 210px;
+			height: 26px;
+			border-style:none;
+			border-bottom: 1px solid #dddee2;
+			background-color: transparent;
+		}
+		.save_edit .btn_telcancel{
+			display: inline-block;
+		}
+		
+		.save_edit{
+/*  		 position : absolute;  */
+/*  		 margin-left: 0px;  */
+/*  		 margin-top : 0px;  */
+/* 		 padding-left: 2px; */
+/*    		 padding-right: 8px; */
+   		 min-height: 26px;
+   		 line-height: 24px;
+		}
+		
+		#content_setting .userphoto img{
+ 			display : block;  
+			position: absolute;
+			bottom: 0; 
+			width: 90px;
+			height: 90px;
+			object-fit : cover;
+/* 			right: -15px; */
+/* 			background-image: url("../icon/profile_photo.png"); */
+		}	
+		
+		a {
+			cursor : pointer;
+		}
+		
+		#content_setting .userphoto a{
+			 display: block;
+   			 position: absolute;
+   			 bottom: 0;
+  			 width: 40px;
+   			 height: 40px;
+  			 right: -15px;
+  			 background-image: url("../icon/profile_photo.png");
+  			 background-size: cover;
+		}
+		 
+		 input[type=file] {
+   		 height: 23px;
+   		 margin: 0;
+   		 padding: 0 2px;
+   		 vertical-align: middle;
+   		 font-size: 12px;
+   		 color: #505050;
+   		 line-height: 23px;
+   		 border: 1px solid #cdcdce;
+   		 background-color: #fff;
+  
+		}
+		
+		.settinglayer {
+			position: absolute;
+			text-align: left;
+			border: 1px solid #d2d2d2;
+			background: #fff;
+			z-index: 100;
+			border-radius: 3px;
+		}
+		
+		.settinglist a{
+			display: block;
+			line-height: 12px;
+			color: #666;
+			white-space: nowrap;
+			cursor : pointer;
+		}

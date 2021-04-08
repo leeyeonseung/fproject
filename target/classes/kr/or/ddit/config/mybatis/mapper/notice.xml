@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="notice">
+	
+	<select id="selectPagingNotice" resultType="noticevo"  parameterType="pageVo">
+			select  * 
+			from 
+			(select rownum rn, a.*
+			 from 
+			    (select * from notice
+			    ORDER BY SNTNCNO) a 
+			 where rownum &lt;= #{page} * #{pageSize} )
+			where rn between (#{page}-1)* #{pageSize} + 1 and #{page} * #{pageSize}
+			and prjctno = #{prjctno}
+	</select>
+	
+	
+	<select id="selectAllNoticeCnt" resultType="int">
+		select count(*) from notice
+	</select>
+	
+	<select id="detailNotice" parameterType="String" resultType="noticevo">
+		select * from notice where sntncno = #{sntncno}
+	</select>
+	
+	<select id="selectAuthor" parameterType="membervo" resultType="String">
+		select author from member 
+		where usid = #{usid}
+		and prjctno = #{prjctno}
+	</select>
+	
+	<update id="modifyNotice" parameterType="noticevo">
+		update notice set noticesj = #{noticesj} , noticecn = #{noticecn} where sntncno = #{sntncno}
+	</update>
+	
+	
+	<delete id="noticeDelete" parameterType="noticevo">
+		delete from notice where sntncno = #{sntncno}
+	</delete>
+	
+	<insert id="noticeInsert" parameterType="noticevo">
+		INSERT INTO notice (
+		    	sntncno	    <!--글번호 -->
+		    ,	prjctno		<!--프로젝트번호 -->
+		    ,	wrterid 	<!--작성자아이디 -->
+		    ,	noticesj	<!--공지제목 -->
+		    ,	noticecn	<!--공지내용 -->
+            ,   writngde    <!--작성날짜 -->
+		) 
+		
+		     SELECT codetyid || TO_CHAR(RPAD(TO_NUMBER(TO_CHAR(SYSDATE, 'yymm')), 7, 0) + NT_SEQ.NEXTVAL) sntncno
+		   	,#{prjctno}
+		    ,#{wrterid}	
+		    ,#{noticesj}	
+            ,#{noticecn}	
+		    ,SYSDATE
+		   
+		FROM code_group
+		WHERE codetyid = UPPER('nt')
+	</insert>
+	
+</mapper>

@@ -1,0 +1,365 @@
+@charset "UTF-8";
+
+
+/* ysl2 css*/
+
+.workwriteWrap .titleBx .titleReadOnly {
+    font-weight: 700;
+    font-size: 16px;
+    padding-left: 10px;
+    /* overflow: hidden; */
+    width: 550px;
+    word-break: break-all;
+}
+.post_writer .date {
+    margin-top: 6px;
+    display: block;
+    color: silver;
+    font-size: 12px;
+}
+element.style {
+    cursor: pointer;
+    margin-right: 6px;
+    vertical-align: middle;
+}
+.post_writer .name {
+    color: #111;
+}
+.post_writer .photo {
+    float: left;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 40px;
+}
+.workTab button.tab1 {
+    border-radius: 4px 0 0 4px;
+    margin-left: 0;
+}
+.workTab div {
+	color:black;
+	font-weight:bolder;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -1px;
+    width: 71px;
+    height: 32px;
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #f0f1f3;
+    
+}
+.workTab2 div {
+	color:black;
+	font-weight:bolder;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -1px;
+    width: 71px;
+    height: 32px;
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #f0f1f3;
+    
+}
+.worktab div {
+	color:black;
+	font-weight:bolder;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -1px;
+    width: 40px;
+    height: 20px;
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #f0f1f3;
+    
+}
+.worktab2 div {
+	color:black;
+	font-weight:bolder;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -1px;
+    width: 40px;
+    height: 20px;
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid #f0f1f3;
+    
+}
+
+.workTab div label{
+	margin-top: 7px;
+}
+.workTab2 div label{
+	margin-top: 7px;
+}
+.workTab .on{
+	background-color: gray;
+}
+.workTab2 .on{
+	background-color: gray;
+}
+.workTab {
+    margin: 7px 0 0 0;
+    display: inline-block;
+    height: 32px;
+    overflow: hidden;
+}
+.workTab2 {
+    margin: 7px 0 0 0;
+    display: inline-block;
+    height: 32px;
+    overflow: hidden;
+}
+.workwriteWrap .titleBx {
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eaeaea;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+}
+.post_write_tab ul li.on a {
+    color: #307cff;
+}
+.post_write_tab ul li > a {
+    display: block;
+    line-height: 50px;
+    font-weight: 500;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+}
+button, a {
+    cursor: pointer;
+}
+
+dl, ul, ol {
+    list-style: none;
+    
+}
+
+.post_write_tab {
+    position: relative;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+}
+div {
+    display: block;
+}
+strong {
+    font-weight: bold;
+}
+
+#in{
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-right: -4px;
+}
+#de{
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	margin-left: -3px;
+}
+.inde{
+	border:1px solid skyblue;
+	background-color: rgba(0,0,0,0);
+	color: skyblue;
+	padding : 5px;
+}
+.inde:hover {
+	color:white;
+	background-color: skyblue;
+}
+.col-md-12 .textarea {
+	line-height: 3;
+}
+
+
+.textarea_h{
+	height : 300px;
+}
+
+/* rightbar css */
+.sidebar_r{
+  float: right;
+  width: 280px;
+  position: fixed;
+  margin-left : 85%;
+  background: #f9f9f9;
+  border-right: 1px solid #e5e5e5;
+  
+	}
+.ulstyle{
+  display: block;
+  color: #696969;
+  font-size: 7px;
+  font-family: "open_sansregular";
+  text-transform: uppercase;
+  background: #fff;
+  line-height: 68px;
+  box-shadow: inset 0 -1px 0 #e5e5e5;
+  -webkit-transition: background 0.3s;
+  -moz-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  transition: background 0.3s;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 20px;
+}
+.ucc{
+  float: left;
+  display: block;
+  color: #696969;
+  font-size: 15px;
+  font-family: "open_sansregular";
+  text-transform: uppercase;
+  background: #fff;
+  line-height: 68px;
+  box-shadow: inset 0 -1px 0 #e5e5e5;
+  -webkit-transition: background 0.3s;
+  -moz-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  transition: background 0.3s;
+  overflow: hidden;
+	  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+  padding-left: 20px;
+}
+.ucc:hover{
+	text-decoration:none
+}
+.messagei:hover{
+	color: black;
+	text-decoration:none
+}
+.messagei:visited{
+	color: black;
+}
+.messagei:link{
+	color: black;
+}
+.messagei{
+	height: 17px;
+	width: 17px;
+}
+#modal{
+	float : right;
+	font-size: 9px;
+}
+.amodal{
+	text-decoration: none; 
+}
+.amodal:link{
+	text-decoration: none; 
+	text-shadow: 0 0 24px;
+}
+#imguser{
+	width: 45px; 
+	height: 45x;
+	border-radius: 70%;
+}
+#inviteDiv{
+	width: 245px; 
+	height: 245x;
+	border: 2px solid black;
+}
+
+
+/* body css*/
+.col-md-12 {
+    width: 1245px;
+    
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    width: 1000px;
+}
+
+/* main css footer 맨끝 부분*/
+.container2 {
+	padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+}
+
+/*main css*/
+.header2{
+	font-family: poppins;
+    /* padding: 10px 0px; */
+    background: #faa574;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center center;
+}
+.banner-main .carousel-caption .buynow{
+	border: #fff solid 1px;
+    background: antiquewhite;
+    width: 190px;
+    padding: 8px 0;
+    display: inline-block;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 30px;
+    color: #000;
+    text-align: center;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+.row2{
+	margin-left: -180px;
+    width: 1000px;
+}
+
+.hh{
+	font-size: 10px;
+}
+
+
+.read{
+	color: #fff;
+    font-size: 17px;
+    line-height: 29px;
+    background: #052501;
+    border: #052501 solid 1px;
+    padding: 12px 40px;
+    display: inline-block;
+    width: 231px;
+    text-align: center;
+    border-radius: 18px;
+	
+}
+.m_logo{
+	width: 50%;
+   
+	
+}
+
+/* right css*/
+
+.btn-info {
+    color: #fff;
+    background-color: darkgrey;
+}
+
+
+
+	

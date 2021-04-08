@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="users">
+	
+	<!-- 회원가입한 회원 조회 -->
+	<select id="selectAllUser" parameterType="String" resultType="usersvo">
+		SELECT  usid,
+				usernm,
+				password,
+				brthdy,
+				telno,
+				email,
+				proflphoto,
+				cmpnynm
+		 FROM users WHERE usid = #{usid} ORDER BY brthdy DESC
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="usersvo">
+		INSERT INTO users VALUES (#{usid},
+								  #{usernm},
+								  #{password},
+								  #{brthdy},
+								  #{telno},
+								  #{email},
+								    null,
+								    null) 
+	</insert>
+	
+	<!-- 마이페이지 회원 정보 조회 -->
+	<resultMap type="usersvo" id="usersvo">
+		<result column ="usid" property="usid"/>
+		<result column ="usernm" property="usernm"/>
+		<result column ="brthdy" property="brthdy"/>
+		<result column ="email" property="email"/>
+		<result column ="proflphoto" property="proflphoto"/>
+	</resultMap>
+	
+	<resultMap type="companyvo" id="companyvo">
+		<result column ="deptno" property="deptno"/>
+		<result column ="dept" property="dept"/>
+		<result column ="rspofc" property="rspofc"/>		
+	</resultMap>
+
+
+	<select id="selectUser" parameterType="String" resultType="usersvo">
+		SELECT usid, usernm, brthdy, email, proflphoto
+	</select>
+	
+	<!-- 	마이페이지에서 이름 수정 -->
+	<update id="updateUsernm" parameterType="usersvo">
+		UPDATE users SET usernm = #{usernm}
+		WHERE usid = #{usid}
+	</update>
+	
+	<!-- 	마이페이지에서 번호 수정 -->
+	<update id="updateUsertelno" parameterType="usersvo">
+		UPDATE users SET telno = #{telno}
+		WHERE usid = #{usid}
+	</update>
+	
+	<!-- 	프로필 사진 변경 -->
+	<update id="updateUserPhoto" parameterType="usersvo">
+		UPDATE users SET proflphoto = #{proflphoto}
+		WHERE usid = #{usid}
+	</update>
+	
+	<!-- 	프로필 사진 삭제 -->
+	<update id="removeUserPhoto" parameterType="usersvo">
+		UPDATE users SET proflphoto = #{proflphoto}
+		WHERE usid = #{usid}
+	</update>
+	
+	<!-- 	비밀번호 변경 -->
+	<update id="changePass" parameterType="usersvo">
+		UPDATE users SET password = #{password}
+		WHERE usid = #{usid}
+	</update>
+	
+	<!-- 	이름하고 전화번호가 같은지 비교 -->
+	<select id="compareUser" parameterType="String" resultMap="usersvo">
+		SELECT usernm, telno FROM users
+		WHERE usernm = #{usernm}
+	</select>
+	
+	
+	<!-- 	전화번호로 사용자 아이디 찾기 -->
+	<select id="findUserId" parameterType="String" resultType="String">
+		SELECT usid FROM users
+		WHERE telno = #{telno}
+	</select>
+	
+	<!-- 	비밀번호 찾을 때 이메일이 등록 된 회원인지 조회 -->
+	<select id="findEmail" parameterType="String" resultType="String">
+		SELECT email FROM users
+		WHERE email = #{email}
+	</select>
+	
+	<!-- 	이메일을 통해 임시 비밀번호 발급 -->
+	<update id="tempPass" parameterType="usersvo">
+		UPDATE users SET password = #{password}
+		WHERE email = #{email}  
+	</update>
+	
+</mapper>

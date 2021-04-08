@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="calendar">
+
+	<select id="callTask" parameterType="String" resultType="taskvo2">
+		select task.*, prjctnm
+		from task, project 
+		where task.prjctno= project.prjctno
+		  and task.prjctno= #{prjctno}
+	</select>
+	
+	<select id="callCalendar" parameterType="String" resultType="calendarvo">
+		select calendar.*, prjctnm
+		from calendar, project
+		where calendar.prjctno = project.prjctno
+		  and project.prjctno = #{prjctno}
+	</select>
+
+</mapper>
